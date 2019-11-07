@@ -24,7 +24,13 @@ namespace MVCCRUDWITHMYSQL.Controllers
         // GET: Product/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            //details of a product
+            product productModel = new product();
+            using(DBModels dbModel=new DBModels())
+            {
+                productModel = dbModel.products.Where(x => x.ProductID == id).FirstOrDefault();
+            }
+            return View(productModel);
         }
 
         // GET: Product/Create
