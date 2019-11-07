@@ -30,23 +30,20 @@ namespace MVCCRUDWITHMYSQL.Controllers
         // GET: Product/Create
         public ActionResult Create()
         {
-            return View();
+            return View(new product());
         }
 
         // POST: Product/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(product productModel)
         {
-            try
+            //add new product to database
+            using (DBModels dbModel=new DBModels())
             {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
+                dbModel.products.Add(productModel);
+                dbModel.SaveChanges();
             }
-            catch
-            {
-                return View();
-            }
+            return RedirectToAction("Index");
         }
 
         // GET: Product/Edit/5

@@ -11,10 +11,12 @@ namespace MVCCRUDWITHMYSQL.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     
     public partial class product
     {
         public int ProductID { get; set; }
+        [DisplayName("Product Name")]
         public string ProductName { get; set; }
         public Nullable<decimal> Price { get; set; }
         public Nullable<int> Count { get; set; }
