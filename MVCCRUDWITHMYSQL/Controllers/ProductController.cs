@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using MVCCRUDWITHMYSQL.Models;
+using System.Data.Entity;
 
 namespace MVCCRUDWITHMYSQL.Controllers
 {
@@ -55,23 +56,26 @@ namespace MVCCRUDWITHMYSQL.Controllers
         // GET: Product/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            product productModel = new product();
+            using (DBModels dbModel = new DBModels())
+            {
+                productModel = dbModel.products.Where(x => x.ProductID == id).FirstOrDefault();
+            }
+            return View(productModel);
         }
 
         // POST: Product/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(int id,product productModel)
         {
-            try
+            //Edit a product
+            productModel.ProductID = id;
+            using(DBModels dbModel=new DBModels())
             {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
+                dbModel.Entry(productModel).State = EntityState.Modified;
+                dbModel.SaveChanges();
             }
-            catch
-            {
-                return View();
-            }
+            return RedirectToAction("Index");
         }
 
         // GET: Product/Delete/5
