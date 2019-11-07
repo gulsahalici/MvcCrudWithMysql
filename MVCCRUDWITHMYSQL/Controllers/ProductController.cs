@@ -81,23 +81,27 @@ namespace MVCCRUDWITHMYSQL.Controllers
         // GET: Product/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            product productModel = new product();
+            using (DBModels dbModel = new DBModels())
+            {
+                productModel = dbModel.products.Where(x => x.ProductID == id).FirstOrDefault();
+            }
+            return View(productModel);
+          
         }
 
         // POST: Product/Delete/5
         [HttpPost]
         public ActionResult Delete(int id, FormCollection collection)
         {
-            try
+            //delete a product
+            using (DBModels dbModel = new DBModels())
             {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
+                product productModel = dbModel.products.Where(x => x.ProductID == id).FirstOrDefault();
+                dbModel.products.Remove(productModel);
+                dbModel.SaveChanges();
             }
-            catch
-            {
-                return View();
-            }
+            return RedirectToAction("Index");
         }
     }
 }
