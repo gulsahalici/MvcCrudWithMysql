@@ -12,13 +12,17 @@ namespace MVCCRUDWITHMYSQL.Models
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class product
     {
         public int ProductID { get; set; }
+        [Required(ErrorMessage = "Please Enter Product Name!")]
         [DisplayName("Product Name")]
         public string ProductName { get; set; }
+        [Required(ErrorMessage = "Please Enter Price Of Product!")]
         public Nullable<decimal> Price { get; set; }
+        [Required(ErrorMessage = "Please Enter Count Of Product!")]
         public Nullable<int> Count { get; set; }
     }
 }
